@@ -97,11 +97,9 @@
 
         function animate() {
             analyser.getByteTimeDomainData(audioBuffer);
-            console.log(audioBuffer);
 
             for (let i = 0; i < audioBuffer.length; i++) {
-                let distorce = audioBuffer[i] > 0 ? audioBuffer[i]*100 : 0;
-                particles[i].distorce = distorce;
+                particles[i].distorce = audioBuffer[i];
             }
 
             ctx.clearRect(0, 0, width, height);
