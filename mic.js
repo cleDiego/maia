@@ -99,7 +99,7 @@ utterance.addEventListener('end', function() {
 
 // Converter a fala em áudio e definir no elemento de áudio
 const synth = window.speechSynthesis;
-synth.speak(utterance);
-audioElement.src = URL.createObjectURL(new Blob([new Uint8Array()], { type: 'audio/wav' }));
+let record = synth.speak(utterance);
+audioElement.src = URL.createObjectURL(new Blob(record, { type: 'audio/wav' }));
 audioElement.play();
 */
