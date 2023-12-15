@@ -85,25 +85,26 @@
         var audioBuffer = new Float32Array();
 
         const audio = document.getElementById("audio");
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const audioSource = audioContext.createMediaElementSource(audio);
+        const analyser = audioContext.createAnalyser();
+
+        const audioBuffer = new Float32Array(256);
+        audioSource.connect(analyser);
+        analyser.connect(audioContext.destination);
+
         audio.addEventListener("play", (event) => {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const audioSource = audioContext.createMediaElementSource(audio);
-            const analyser = audioContext.createAnalyser();
-            const audioBuffer = new Float32Array(256);
-            audioSource.connect(analyser);
-            analyser.connect(audioContext.destination);
+            audioContext.resume();
         });
 
 
         function animate() {
-            if(analyser) {
-                analyser.getByteTimeDomainData(audioBuffer);
-                console.log(audioBuffer);
+            analyser.getByteTimeDomainData(audioBuffer);
+            console.log(audioBuffer);
 
-                for (let i = 0; i < audioBuffer.length; i++) {
-                    let distorce = audioBuffer[i] > 0 ? audioBuffer[i]*100 : 0;
-                    particles[i].distorce = distorce;
-                }
+            for (let i = 0; i < audioBuffer.length; i++) {
+                let distorce = audioBuffer[i] > 0 ? audioBuffer[i]*100 : 0;
+                particles[i].distorce = distorce;
             }
 
             ctx.clearRect(0, 0, width, height);
