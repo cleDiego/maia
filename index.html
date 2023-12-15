@@ -80,10 +80,6 @@
         }, function(e){});
         */
 
-        
-        var analyser = null;
-        var audioBuffer = new Float32Array();
-
         const audio = document.getElementById("audio");
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const audioSource = audioContext.createMediaElementSource(audio);
