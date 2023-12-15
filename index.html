@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <audio controls  id="audio" src="./music2.mp3"></audio>
+    <audio controls  id="audio" src="https://samples.audible.com/bk/lili/001158/bk_lili_001158_sample.mp3"></audio>
     <canvas></canvas>
     <script src="./fnCanvas.js"></script>
     <script src="./Particle.js"></script>
@@ -86,11 +86,12 @@
 
         const audio = document.getElementById("audio");
         audio.addEventListener("play", (event) => {
-            const audioSource = audioContext.createMediaElementSource(audio);
-            const analyser = audioContext.createAnalyser();
-            const audioBuffer = new Float32Array(256);
-            audioSource.connect(analyser);
-            analyser.connect(audioContext.destination);
+            //audioContext.resume();
+            //const audioSource = audioContext.createMediaElementSource(audio);
+            //const analyser = audioContext.createAnalyser();
+            //const audioBuffer = new Float32Array(256);
+            //audioSource.connect(analyser);
+            //analyser.connect(audioContext.destination);
         });
 
 
