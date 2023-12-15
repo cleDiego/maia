@@ -101,7 +101,7 @@
             ctx.clearRect(0, 0, width, height);
             for (let i = 0; i < particles.length; i++) {
                 let r = particles[i];
-                r.distorce = audioBuffer[i];
+                r.distorce = audioBuffer[i] / 1000;
                 r.calcPosition();
                 r.drawParticle();
                 r.drawConnection(particles);
