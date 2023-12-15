@@ -129,10 +129,7 @@ class Particle {
   drawRing() {
     let r = this;
     ctx.beginPath();
-    if(r.distorce > 30) {
-      r.lineWidthRings = r.distorce;
-      console.log(r.distorce);
-    }
+    r.lineWidthRings = r.distorce;
 
     if(r.lineWidthRings > 0) r.lineWidthRings -= 0.01 * (Math.pow((r.x - this.wCenter), 2) + Math.pow((r.y - this.hCenter), 2));
     ctx.lineWidth = r.lineWidthRings;
