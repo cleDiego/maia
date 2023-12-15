@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Maya</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"
+        integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+    <style>
+        body {
+            overflow: hidden;
+            background-color: #0e0e0e;
+        }
+    </style>
+</head>
+
+<body>
+    <audio controls  id="audio" src="music2.mp3" crossorigin="anonymous"></audio>
+    <canvas></canvas>
+    <script src="./fnCanvas.js"></script>
+    <script src="./Particle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script>
+        var fftSize = 256;
+        var smoothing = 0;
+
+        var particles = [];
+        for(let i = 0; i < fftSize; i++) {
+            particles.push(
+                new Particle(
+                    [i*2, i*2],
+                    [i*2, i*2]
+                )
+            );
+        }
+        //for(let i = 0; i < fftSize/4; i++) {
+        //    particles.push(
+        //        new Particle(
+        //           // [40, 80],
+        //           // [40, 80]
+        //        )
+        //    );
+        //}
+
+        /*
+        navigator.getMedia = (navigator.getUserMedia ||
+                        navigator.webkitGetUserMedia ||
+                        navigator.mozGetUserMedia ||
+                        navigator.msGetUserMedia);
+
+        navigator.getMedia({audio:true}, function(stream){
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            microphone = audioContext.createMediaStreamSource(stream);
+            javascriptNode = audioContext.createScriptProcessor(fftSize, 1, 1);
+            analyser.fftSize = fftSize;
+            analyser.smoothingTimeConstant = smoothing;
+
+            microphone.connect(analyser);
+            analyser.connect(javascriptNode);
+            javascriptNode.connect(audioContext.destination);
+
+            javascriptNode.onaudioprocess = function(e) {
+                let inputData = e.inputBuffer.getChannelData(0);
+                let audioBuffer = new Float32Array(analyser.frequencyBinCount);
+                analyser.getFloatTimeDomainData(audioBuffer);
+                for (let i = 0; i < audioBuffer.length; i++) {
+                    let distorce = audioBuffer[i] > 0 ? audioBuffer[i]*100 : 0;
+                    particles[i].distorce = distorce;
+                }
+            }
+        }, function(e){});
+        */
+
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        var analyser = null;
+        var audioBuffer = new Float32Array();
+
+        const audio = document.getElementById("audio");
+        audio.addEventListener("play", (event) => {
+            const audioSource = audioContext.createMediaElementSource(audio);
+            const analyser = audioContext.createAnalyser();
+            const audioBuffer = new Float32Array(256);
+            audioSource.connect(analyser);
+            analyser.connect(audioContext.destination);
+        });
+
+
+
+
+
+        function animate() {
+            if(analyser) {
+                analyser.getByteTimeDomainData(audioBuffer);
+                console.log(audioBuffer);
+
+                for (let i = 0; i < audioBuffer.length; i++) {
+                    let distorce = audioBuffer[i] > 0 ? audioBuffer[i]*100 : 0;
+                    particles[i].distorce = distorce;
+                }
+            }
+
+            ctx.clearRect(0, 0, width, height);
+            for(let i = 0; i < particles.length; i++){
+                let r = particles[i];
+
+
+                r.calcPosition();
+                r.drawParticle();
+                r.drawConnection(particles);
+                r.drawRing();
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+
+    </script>
+
+</html>
