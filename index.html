@@ -33,7 +33,7 @@
         var smoothing = 0;
 
         var particles = [];
-        for(let i = 0; i < fftSize; i++) {
+        for(let i = 0; i < fftSize/2; i++) {
             particles.push(
                 new Particle(
                     [i*2, i*2],
