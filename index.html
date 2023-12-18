@@ -103,10 +103,10 @@
         });
 
         function playback() {
-            const playSound = ctx.createBufferSource();
-            playSound.buffer = audio;
-            playSound.connect(audioContext.destination);
-            playSound.start(audioContext.currentTime);
+            const analyser = ctx.createBufferSource();
+            analyser.buffer = audio;
+            analyser.connect(audioContext.destination);
+            analyser.start(audioContext.currentTime);
         }
 
         window.addEventListener("mousedown", playback);
