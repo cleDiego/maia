@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    <audio controls  id="audio" src="./music2.mp3"></audio>
+    <!--audio controls  id="audio" src="https://samples.audible.com/bk/lili/001158/bk_lili_001158_sample.mp3"></audio-->
     <canvas></canvas>
     <script src="./fnCanvas.js"></script>
     <script src="./Particle.js"></script>
@@ -81,19 +81,36 @@
         }, function(e){});
         */
 
-        const audio = document.getElementById("audio");
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const audioSource = audioContext.createMediaElementSource(audio);
-        const analyser = audioContext.createAnalyser();
-        analyser.fftSize = fftSize;
+        //const audio = document.getElementById("audio");
+        //const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        //const audioSource = audioContext.createMediaElementSource(audio);
+        //const analyser = audioContext.createAnalyser();
+        //analyser.fftSize = fftSize;
+        //const audioBuffer = new Uint8Array(analyser.frequencyBinCount);
+        //audioSource.connect(analyser);
+        //analyser.connect(audioContext.destination);
+        //audio.addEventListener("play", (event) => {
+        //    audioContext.resume();
+        //});
 
-        const audioBuffer = new Uint8Array(analyser.frequencyBinCount);
-        audioSource.connect(analyser);
-        analyser.connect(audioContext.destination);
-
-        audio.addEventListener("play", (event) => {
-            audioContext.resume();
+        const audioContext = new AudioContext();
+        let audio;
+        fetch("https://samples.audible.com/bk/lili/001158/bk_lili_001158_sample.mp3")
+        .then(data => data.arrayBuffer())
+        .then(arrayBuffer => ctx.decodeAudioData(arrayBuffer))
+        .then(decodedAudio => {
+            audio = decodedAudio;
         });
+
+        function playback() {
+            const playSound = ctx.createBufferSource();
+            playSound.buffer = audio;
+            playSound.connect(audioContext.destination);
+            playSound.start(audioContext.currentTime);
+        }
+
+        window.addEventListener("mousedown", playback);
+
 
 
         function animate() {
