@@ -129,9 +129,11 @@ class Particle {
   drawRing() {
     let r = this;
     ctx.beginPath();
-    r.lineWidthRings = r.distorce;
+    if(r.distorce > 0) {
+      r.lineWidthRings = r.distorce;
+    }
 
-    if(r.lineWidthRings > 0) r.lineWidthRings -= 0.01 * (Math.pow((r.x - this.wCenter), 2) + Math.pow((r.y - this.hCenter), 2));
+    if(r.lineWidthRings > 0) r.lineWidthRings -= 0.001 * (Math.pow((r.x - this.wCenter), 2) + Math.pow((r.y - this.hCenter), 2));
     ctx.lineWidth = r.lineWidthRings;
     ctx.strokeStyle = 'hsla('+r.color+','+(0.01 + (r.distorce/10000))+')';
     

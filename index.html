@@ -22,6 +22,7 @@
 
 <body>
     <!--audio controls  id="audio" src="https://samples.audible.com/bk/lili/001158/bk_lili_001158_sample.mp3"></audio-->
+    <input id="audio-file" accept="audio/*" disabled type="file"/>
     <canvas></canvas>
     <script src="./fnCanvas.js"></script>
     <script src="./Particle.js"></script>
@@ -39,8 +40,8 @@
         for(let i = 0; i < fftSize/2; i++) {
             particles.push(
                 new Particle(
-                    [i*2, i*2],
-                    [i*2, i*2]
+                    [10+(i*2), i*2],
+                    [10+(i*2), i*2]
                 )
             );
         }
