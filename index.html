@@ -31,105 +31,20 @@
         crossorigin="anonymous"></script>
 
     <script>
-        var fftSize = 256;
-        var smoothing = 0;
-
-        var particles = [];
-        for(let i = 0; i < fftSize/2; i++) {
-            particles.push(
-                new Particle(
-                    [i*2, i*2],
-                    [i*2, i*2]
-                )
-            );
+        function voiceStartCallback() {
+            console.log("Voice started");
         }
-        //for(let i = 0; i < fftSize/4; i++) {
-        //    particles.push(
-        //        new Particle(
-        //           // [40, 80],
-        //           // [40, 80]
-        //        )
-        //    );
-        //}
-
-        /*
-        navigator.getMedia = (navigator.getUserMedia ||
-                        navigator.webkitGetUserMedia ||
-                        navigator.mozGetUserMedia ||
-                        navigator.msGetUserMedia);
-
-        navigator.getMedia({audio:true}, function(stream){
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            analyser = audioContext.createAnalyser();
-            microphone = audioContext.createMediaStreamSource(stream);
-            javascriptNode = audioContext.createScriptProcessor(fftSize, 1, 1);
-            analyser.fftSize = fftSize;
-            analyser.smoothingTimeConstant = smoothing;
-
-            microphone.connect(analyser);
-            analyser.connect(javascriptNode);
-            javascriptNode.connect(audioContext.destination);
-
-            javascriptNode.onaudioprocess = function(e) {
-                let inputData = e.inputBuffer.getChannelData(0);
-                let audioBuffer = new Float32Array(analyser.frequencyBinCount);
-                analyser.getFloatTimeDomainData(audioBuffer);
-                for (let i = 0; i < audioBuffer.length; i++) {
-                    let distorce = audioBuffer[i] > 0 ? audioBuffer[i]*100 : 0;
-                    particles[i].distorce = distorce;
-                }
-            }
-        }, function(e){});
-        */
-
-        //const audio = document.getElementById("audio");
-        //const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        //const audioSource = audioContext.createMediaElementSource(audio);
-        //const analyser = audioContext.createAnalyser();
-        //analyser.fftSize = fftSize;
-        //const audioBuffer = new Uint8Array(analyser.frequencyBinCount);
-        //audioSource.connect(analyser);
-        //analyser.connect(audioContext.destination);
-        //audio.addEventListener("play", (event) => {
-        //    audioContext.resume();
-        //});
-
-        const audioContext = new AudioContext();
-        let audio;
-        fetch("https://samples.audible.com/bk/lili/001158/bk_lili_001158_sample.mp3")
-        .then(data => data.arrayBuffer())
-        .then(arrayBuffer => ctx.decodeAudioData(arrayBuffer))
-        .then(decodedAudio => {
-            audio = decodedAudio;
-        });
-
-        function playback() {
-            const analyser = ctx.createBufferSource();
-            analyser.buffer = audio;
-            analyser.connect(audioContext.destination);
-            analyser.start(audioContext.currentTime);
+        
+        function voiceEndCallback() {
+            console.log("Voice ended");
         }
-
-        window.addEventListener("mousedown", playback);
-
-
-
-        function animate() {
-            analyser.getByteTimeDomainData(audioBuffer);
-            
-            ctx.clearRect(0, 0, width, height);
-            for (let i = 0; i < particles.length; i++) {
-                let r = particles[i];
-                r.distorce = audioBuffer[i] / 100;
-                r.calcPosition();
-                r.drawParticle();
-                r.drawConnection(particles);
-                r.drawRing();
-
-            }
-            requestAnimationFrame(animate);
+        
+        var parameters = {
+            onstart: voiceStartCallback,
+            onend: voiceEndCallback
         }
-        animate();
+        
+        responsiveVoice.speak("Hello, this is a test using callbacks","UK English Female", parameters);
 
 
     </script>
