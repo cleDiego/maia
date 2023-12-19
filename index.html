@@ -46,12 +46,12 @@
         }
 
         function animate() {
-            analyser.getByteTimeDomainData(audioBuffer);
+            //analyser.getByteTimeDomainData(audioBuffer);
             
             ctx.clearRect(0, 0, width, height);
             for (let i = 0; i < particles.length; i++) {
                 let r = particles[i];
-                r.distorce = audioBuffer[i] / 100;
+                //r.distorce = audioBuffer[i] / 100;
                 r.calcPosition();
                 r.drawParticle();
                 r.drawConnection(particles);
