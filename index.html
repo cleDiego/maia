@@ -23,7 +23,6 @@
 <body>
     <!--audio controls  id="audio" src="https://samples.audible.com/bk/lili/001158/bk_lili_001158_sample.mp3"></audio-->
     <canvas></canvas>
-    <script src="https://code.responsivevoice.org/responsivevoice.js?key=RXsMP0FQ"></script>
     <script src="./fnCanvas.js"></script>
     <script src="./Particle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -31,20 +30,37 @@
         crossorigin="anonymous"></script>
 
     <script>
-        function voiceStartCallback() {
-            console.log("Voice started");
+        //open-ai//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
+        //speechgen//3b5059c2a240828155a55624bfcbd8aa
+        var fftSize = 256;
+        var smoothing = 0;
+
+        var particles = [];
+        for(let i = 0; i < fftSize/2; i++) {
+            particles.push(
+                new Particle(
+                    [i*2, i*2],
+                    [i*2, i*2]
+                )
+            );
         }
-        
-        function voiceEndCallback() {
-            console.log("Voice ended");
+
+        function animate() {
+            analyser.getByteTimeDomainData(audioBuffer);
+            
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < particles.length; i++) {
+                let r = particles[i];
+                r.distorce = audioBuffer[i] / 100;
+                r.calcPosition();
+                r.drawParticle();
+                r.drawConnection(particles);
+                r.drawRing();
+
+            }
+            requestAnimationFrame(animate);
         }
-        
-        var parameters = {
-            onstart: voiceStartCallback,
-            onend: voiceEndCallback
-        }
-        
-        responsiveVoice.speak("Olá meu nome não é cleverson", parameters);
+        animate();
 
 
     </script>
