@@ -40,8 +40,8 @@
         for(let i = 0; i < fftSize/2; i++) {
             particles.push(
                 new Particle(
-                    [40, 40+i],
-                    [40, 40+i]
+                    [40, 200],
+                    [40, 200]
                 )
             );
         }
@@ -55,7 +55,7 @@
                 //r.distorce = audioBuffer[i] / 100;
                 r.calcPosition(particles);
                 r.drawParticle();
-                r.drawConnection(particles, 4);
+                r.drawConnection(particles, 10);
                 r.drawRing();
 
             }

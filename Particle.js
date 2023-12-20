@@ -14,11 +14,11 @@ class Particle {
     this.speed = randNumberBetween(0.008, 0.005);
     this.color = randNumberBetween(180, 210, true) + ',' + randNumberBetween(50, 100, true) + '%,' + randNumberBetween(50, 100, true) + '%';
     this.width = randNumberBetween(0.5, 1.2);
-    this.length = randNumberBetween(10, 100);
+    this.length = randNumberBetween(1, 50);
     this.theta = randNumberBetween(0, pi2());
     this.lastPositions = [this.position];
     this.control = false;
-    this.lineWidthRings = 0.1;
+    this.lineWidthRings = 0.5;
 
     this.distances = [];
     this.synapseWidth = 3;
@@ -59,7 +59,7 @@ class Particle {
     let arr = [];
     for (let i = 0; i < particles.length; i++) {
       let pp = particles[i].position;
-      let d = Math.pow((pp.x - p.x), 2) + Math.pow((pp.y - p.y), 2);
+      let d = Math.pow((pp.x - x), 2) + Math.pow((pp.y - y), 2);
       arr.push({distance: d, position: pp});
     }
     arr.sort((a,b) => a.distance - b.distance);
@@ -145,7 +145,7 @@ class Particle {
       r.lineWidthRings = r.distorce;
     }
 
-    if(r.lineWidthRings > 0.1) r.lineWidthRings -= 0.001 * (Math.pow((r.x - this.wCenter), 2) + Math.pow((r.y - this.hCenter), 2));
+    if(r.lineWidthRings > 0.5) r.lineWidthRings -= 0.001 * (Math.pow((r.x - this.wCenter), 2) + Math.pow((r.y - this.hCenter), 2));
     ctx.lineWidth = r.lineWidthRings;
     ctx.strokeStyle = 'hsla('+r.color+','+(0.1 + (r.distorce/10000))+')';
     
