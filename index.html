@@ -33,15 +33,15 @@
     <script>
         //open-ai//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
         //speechgen//3b5059c2a240828155a55624bfcbd8aa
-        var fftSize = 4;
+        var fftSize = 24;
         var smoothing = 0;
 
         var particles = [];
         for(let i = 0; i < fftSize/2; i++) {
             particles.push(
                 new Particle(
-                    [i*2, i*2],
-                    [i*2, i*2]
+                    [180, 200],
+                    [180, 200]
                 )
             );
         }
