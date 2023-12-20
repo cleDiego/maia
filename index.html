@@ -14,7 +14,7 @@
     <style>
         body {
             overflow: hidden;
-            background: #2d2d2d;
+            background: #000;
             background-size: cover;
         }
     </style>
@@ -40,8 +40,8 @@
         for(let i = 0; i < fftSize/2; i++) {
             particles.push(
                 new Particle(
-                    [40, i],
-                    [40, i]
+                    [40, i*2],
+                    [40, i*2]
                 )
             );
         }
