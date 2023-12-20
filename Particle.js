@@ -94,6 +94,7 @@ class Particle {
     arr.sort((a,b) => a.d - b.d);
     ctx.moveTo(p.x, p.y);
     ctx.strokeStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
+    ctx.fillStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.lineWidth = 1 + (this.distorce);
     ctx.font = "6px serif";
     for(let i = 0; i < arr.length; i++) {
