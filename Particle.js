@@ -76,7 +76,7 @@ class Particle {
     if (this.lastPositions.length > this.length) this.lastPositions.pop();
   }
 
-  drawConnection(particles = []) {
+  drawConnection(particles = [], numConnections = particles.length) {
     ctx.beginPath();
     let dd = null;
     let p = this.position;
@@ -93,7 +93,9 @@ class Particle {
     ctx.fillStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.lineWidth = 1 + (this.distorce);
     ctx.font = "16px serif";
-    for(let i = 0; i < 4; i++) {
+
+    //4 connections
+    for(let i = 0; i < numConnections; i++) {
       let dp = arr[i];
       ctx.lineTo(dp.position.x, dp.position.y);
       ctx.fillText(Math.round(dp.distance,0), dp.position.x, dp.position.y);
