@@ -18,7 +18,7 @@ class Particle {
     this.theta = randNumberBetween(0, pi2());
     this.lastPositions = [this.position];
     this.control = false;
-    this.lineWidthRings = 0;
+    this.lineWidthRings = 0.1;
   }
 
   calcPosition() { 
@@ -141,9 +141,9 @@ class Particle {
       r.lineWidthRings = r.distorce;
     }
 
-    if(r.lineWidthRings > 0) r.lineWidthRings -= 0.001 * (Math.pow((r.x - this.wCenter), 2) + Math.pow((r.y - this.hCenter), 2));
+    if(r.lineWidthRings > 0.1) r.lineWidthRings -= 0.001 * (Math.pow((r.x - this.wCenter), 2) + Math.pow((r.y - this.hCenter), 2));
     ctx.lineWidth = r.lineWidthRings;
-    ctx.strokeStyle = 'hsla('+r.color+','+(0.01 + (r.distorce/10000))+')';
+    ctx.strokeStyle = 'hsla('+r.color+','+(0.1 + (r.distorce/10000))+')';
     
     for (let theta = 0; theta <= pi2()+0.1; theta += 0.01) {
         let rx = r.xr + (r.amplitude) * Math.sin(r.frequency * theta);
