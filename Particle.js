@@ -14,14 +14,19 @@ class Particle {
     this.speed = randNumberBetween(0.008, 0.005);
     this.color = randNumberBetween(180, 210, true) + ',' + randNumberBetween(50, 100, true) + '%,' + randNumberBetween(50, 100, true) + '%';
     this.width = randNumberBetween(0.5, 1.2);
-    this.length = randNumberBetween(10, 20);
+    this.length = randNumberBetween(10, 100);
     this.theta = randNumberBetween(0, pi2());
     this.lastPositions = [this.position];
     this.control = false;
     this.lineWidthRings = 0.1;
+
+    this.distances = [];
+    this.synapseWidth = 3;
+    this.synapseSpeed = 0.1;
+    this.synapseDestiny = null;
   }
 
-  calcPosition() { 
+  calcPosition(particles) { 
     if (this.theta > pi2()) this.theta = 0;
     this.theta += this.speed;
 
@@ -50,6 +55,15 @@ class Particle {
     let y = this.hCenter + ry * Math.sin(this.theta);
     this.position = { x: x, y: y };
     this.lastPositions.unshift(this.position);
+
+    let arr = [];
+    for (let i = 0; i < particles.length; i++) {
+      let pp = particles[i].position;
+      let d = Math.pow((pp.x - p.x), 2) + Math.pow((pp.y - p.y), 2);
+      arr.push({distance: d, position: pp});
+    }
+    arr.sort((a,b) => a.distance - b.distance);
+    this.distances = arr;
   }
 
   drawParticle() {
@@ -80,30 +94,20 @@ class Particle {
     ctx.beginPath();
     let dd = null;
     let p = this.position;
-    let arr = [];
-    for (let i = 0; i < particles.length; i++) {
-      let pp = particles[i].position;
-      let d = Math.pow((pp.x - p.x), 2) + Math.pow((pp.y - p.y), 2);
-      arr.push({distance: d, position: pp});
-    }
-    arr.sort((a,b) => a.distance - b.distance);
-
+    
     ctx.moveTo(p.x, p.y);
     ctx.strokeStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     //ctx.fillStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.lineWidth = 1 + (this.distorce);
     //ctx.font = "16px serif";
-
     //4 connections
     for(let i = 0; i < numConnections; i++) {
-      let dp = arr[i];
+      let dp = this.distances[i];
       ctx.lineTo(dp.position.x, dp.position.y);
       //ctx.fillText(Math.round(dp.distance,0), dp.position.x, dp.position.y);
     }
     ctx.stroke();
     ctx.closePath();
-    
-
 
     /*
     ctx.beginPath();
@@ -151,9 +155,12 @@ class Particle {
         let x = r.wCenter + rx * Math.cos(theta);
         let y = r.hCenter + ry * Math.sin(theta);
         ctx.lineTo(x, y);
-        
     }
     ctx.stroke();
     ctx.closePath();
+  }
+
+  drawSynapse() {
+    this.synapseDestiny
   }
 }
