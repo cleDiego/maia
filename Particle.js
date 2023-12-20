@@ -74,7 +74,7 @@ class Particle {
       if (lp == this.width) {
         ctx.beginPath();
         let g = ctx.createRadialGradient(r.x, r.y, 0, r.x, r.y, lp * 3);
-        g.addColorStop(0, 'hsla(' + this.color + ',' + randNumberBetween(0.1, 1) + ')');
+        g.addColorStop(0, 'hsla(' + this.color + ',' + randNumberBetween(0.5, 1) + ')');
         g.addColorStop(1, 'hsla(' + this.color + ',0)');
         ctx.arc(r.x, r.y, lp * 4, 0, pi2());
         ctx.fillStyle = g;
