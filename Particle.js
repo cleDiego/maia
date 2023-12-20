@@ -78,25 +78,25 @@ class Particle {
 
   drawConnection(particles = []) {
     ctx.beginPath();
-    //let rp = null;
     let dd = null;
     let p = this.position;
     let arr = [];
     for (let i = 0; i < particles.length; i++) {
       let pp = particles[i].position;
       let d = Math.pow((pp.x - p.x), 2) + Math.pow((pp.y - p.y), 2);
-      arr.push({d: d, p: pp});
+      arr.push({distance: d, position: pp});
     }
-    arr.sort((a,b) => a.d - b.d);
+    arr.sort((a,b) => a.distance - b.distance);
+
     ctx.moveTo(p.x, p.y);
     ctx.strokeStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.fillStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.lineWidth = 1 + (this.distorce);
     ctx.font = "16px serif";
-    for(let i = 0; i < arr.length; i++) {
-      let rp = arr[i];
-      ctx.lineTo(rp.p.x, rp.p.y);
-      ctx.fillText(Math.round(rp.d,0), rp.x, rp.y);
+    for(let i = 0; i < 4; i++) {
+      let dp = arr[i];
+      ctx.lineTo(dp.position.x, dp.position.y);
+      ctx.fillText(Math.round(dp.distance,0), dp.position.x, dp.position.y);
     }
     ctx.stroke();
     ctx.closePath();
