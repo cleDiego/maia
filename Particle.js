@@ -78,23 +78,32 @@ class Particle {
 
   drawConnection(particles = []) {
     ctx.beginPath();
-    let rp = null;
+    //let rp = null;
     let dd = null;
     let p = this.position;
+    let arr = [];
     for (let i = 0; i < particles.length; i++) {
       let pp = particles[i].position;
       let d = Math.pow((pp.x - p.x), 2) + Math.pow((pp.y - p.y), 2);
-      if (!dd || d < dd) {
-        dd = d;
-        rp = pp;
-      }
+      arr.push({d: d, p: pp});
+      //if (!dd || d < dd) {
+      //  dd = d;
+      //  rp = pp;
+      //}
     }
+    arr.sort((a,b) => a.d - b.d);
     ctx.moveTo(p.x, p.y);
-    ctx.lineTo(rp.x, rp.y);
     ctx.strokeStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.lineWidth = 1 + (this.distorce);
+    ctx.font = "6px serif";
+    for(let i = 0; i < arr.length; i++) {
+      let rp = arr[i].p;
+      ctx.lineTo(rp.x, rp.y);
+      ctx.fillText(rp.d, rp.x, rp.y);
+    }
     ctx.stroke();
     ctx.closePath();
+    
 
 
     /*
