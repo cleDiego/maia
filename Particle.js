@@ -90,15 +90,15 @@ class Particle {
 
     ctx.moveTo(p.x, p.y);
     ctx.strokeStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
-    ctx.fillStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
+    //ctx.fillStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.lineWidth = 1 + (this.distorce);
-    ctx.font = "16px serif";
+    //ctx.font = "16px serif";
 
     //4 connections
     for(let i = 0; i < numConnections; i++) {
       let dp = arr[i];
       ctx.lineTo(dp.position.x, dp.position.y);
-      ctx.fillText(Math.round(dp.distance,0), dp.position.x, dp.position.y);
+      //ctx.fillText(Math.round(dp.distance,0), dp.position.x, dp.position.y);
     }
     ctx.stroke();
     ctx.closePath();
