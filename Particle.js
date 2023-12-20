@@ -92,10 +92,10 @@ class Particle {
     ctx.strokeStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.fillStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.lineWidth = 1 + (this.distorce);
-    ctx.font = "12px serif";
+    ctx.font = "16px serif";
     for(let i = 0; i < arr.length; i++) {
-      let rp = arr[i].p;
-      ctx.lineTo(rp.x, rp.y);
+      let rp = arr[i];
+      ctx.lineTo(rp.p.x, rp.p.y);
       ctx.fillText(Math.round(rp.d,0), rp.x, rp.y);
     }
     ctx.stroke();
