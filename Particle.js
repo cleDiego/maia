@@ -86,17 +86,13 @@ class Particle {
       let pp = particles[i].position;
       let d = Math.pow((pp.x - p.x), 2) + Math.pow((pp.y - p.y), 2);
       arr.push({d: d, p: pp});
-      //if (!dd || d < dd) {
-      //  dd = d;
-      //  rp = pp;
-      //}
     }
     arr.sort((a,b) => a.d - b.d);
     ctx.moveTo(p.x, p.y);
     ctx.strokeStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.fillStyle = 'hsla(' + this.color + ','+0.1+(this.distorce)+')';
     ctx.lineWidth = 1 + (this.distorce);
-    ctx.font = "8px serif";
+    ctx.font = "12px serif";
     for(let i = 0; i < arr.length; i++) {
       let rp = arr[i].p;
       ctx.lineTo(rp.x, rp.y);
