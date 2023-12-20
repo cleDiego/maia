@@ -100,7 +100,7 @@ class Particle {
     for(let i = 0; i < arr.length; i++) {
       let rp = arr[i].p;
       ctx.lineTo(rp.x, rp.y);
-      ctx.fillText(rp.d, rp.x, rp.y);
+      ctx.fillText(round(rp.d), rp.x, rp.y);
     }
     ctx.stroke();
     ctx.closePath();
